@@ -18,7 +18,7 @@ const MeetingAssistant = () => {
 
   const checkServerHealth = async () => {
     try {
-      const response = await fetch('http://localhost:3000/health');
+      const response = await fetch('http://34.16.51.59:3000/health');
       if (!response.ok) throw new Error('Server not responding');
       const data = await response.json();
       return data.status === 'Server is running' && data.socketIo === 'active';
@@ -48,7 +48,7 @@ const MeetingAssistant = () => {
       const recorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
       setMediaRecorder(recorder);
 
-      const newSocket = io('http://localhost:3000', {
+      const newSocket = io('http://34.16.51.59:3000', {
         query: { meetingId, userId: user.user._id },
         path: '/socket.io/',
         transports: ['websocket'],
@@ -141,7 +141,7 @@ const MeetingAssistant = () => {
     if (isMeetingActive && meetingId) {
       interval = setInterval(async () => {
         try {
-          const response = await fetch(`http://localhost:3000/meeting-events/${meetingId}`);
+          const response = await fetch(`http://34.16.51.59:3000/meeting-events/${meetingId}`);
           if (!response.ok) throw new Error('Failed to fetch meeting events');
           const data = await response.json();
           setAgenda(data.agenda || []);
